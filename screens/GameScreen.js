@@ -23,7 +23,7 @@ export const GameScreen = props => {
 
   useEffect(() => {
     if (currentGuess === props.userChoice) {
-     props.onGameOver(rounds);
+      props.onGameOver(rounds);
     }
   }, [currentGuess, props.userChoice, props.onGameOver]);
 
@@ -82,6 +82,15 @@ export const GameScreen = props => {
             />
           </View>
         </View>
+      </View>
+      <View style={{ width: 300, maxWidth: "80%", padding: 10 }}>
+        <Button
+          onPress={() => {
+            props.cancel();
+          }}
+          color="red"
+          title="CANCEL"
+        />
       </View>
     </View>
   );

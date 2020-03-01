@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text, TextInput, Button, Alert } from "react-native";
+import { View, StyleSheet, Text, TextInput, Button, Alert, Keyboard } from "react-native";
 import colors from "../constants/colors";
 import { Input } from "../components/Input";
 
@@ -14,9 +14,11 @@ export const StartGameScreen = props => {
   const resetBtnHandler = () => {
     setEnteredValue("");
     setConfirmed(false);
+
   };
   const confirmBtnHandler = () => {
     const cn = parseInt(enteredValue);
+    Keyboard.dismiss();
     if (cn === NaN || cn <= 0 || cn > 99) {
       Alert.alert("Invalid Number!", "Value should be 1 and 90.", [
         { text: "Ok", style: "destructive", onPress: resetBtnHandler }
@@ -29,8 +31,15 @@ export const StartGameScreen = props => {
   };
 
   let confirmedOutput;
+  let confirmedButton;
   if (confirmed) {
-    confirmedOutput = <Button title="Start Game" onPress={()=> props.onStart(selectedNumber)} />;
+    confirmedOutput = (
+      <View style={styles.numberContainer}>
+        <Text style={styles.numberText}> {selectedNumber} </Text>
+      </View>
+    );
+    confirmedButton = (
+        <Button title="Start Game" onPress={()=> props.onStart(selectedNumber)}/> )
   }
 
   return (
@@ -64,6 +73,7 @@ export const StartGameScreen = props => {
         </View>
       </View>
       {confirmedOutput}
+      {confirmedButton}
     </View>
   );
 };
@@ -96,7 +106,19 @@ const styles = StyleSheet.create({
     width: 50,
     textAlign: "center"
   },
-
+  numberContainer: {
+    borderWidth: 2,
+    borderColor: colors.accent,
+    padding: 10,
+    borderRadius: 10,
+    marginVertical: 10,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  numberText: {
+    color: colors.accent,
+    fontSize: 32
+  },
   rcbuttons: {
     flexDirection: "row",
     justifyContent: "space-between",
