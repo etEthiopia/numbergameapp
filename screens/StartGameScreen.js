@@ -9,8 +9,8 @@ export const StartGameScreen = props => {
             <Text>Select a Number</Text>
             <TextInput />
             <View style={styles.rcbuttons}>
-                <Button title='Reset'/>
-                <Button title='Confirm'/>
+                <View style={styles.btnObj}><Button color='#f99e3b' title='Reset'/></View>
+                <View style={styles.btnObj}><Button color='#ff7f00' title='Confirm'/></View>
             </View>
         </View>
       </View>
@@ -45,5 +45,8 @@ export const StartGameScreen = props => {
         justifyContent: 'space-between',
         width: '100%',
         paddingHorizontal: 15
+    },
+    btnObj:{
+        width: 90
     }
   });
