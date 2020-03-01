@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { View, StyleSheet, Text, TextInput, Button, Alert } from "react-native";
 import colors from "../constants/colors";
 
@@ -16,6 +16,29 @@ const generateNum = (min, max, exclude)=> {
 
 export const GameScreen = props => {
     const [currentGuess, setCurrentGuess] = useState(generateNum(1, 100, props.userChoice));
+    const currentLow = useRef(1);
+    const currentHigh = useRef(100);
+
+    useEffect(()=>{
+        if(currentGuess === props.userChoice){}
+    })
+
+    const nextGuessBtnsHandler = gg => {
+        if((gg === -1 && currentGuess < props.userChoice) || (gg === 1 && currentGuess > props.userChoice)){
+            Alert.alert('No Cheating', 'Where are your Morals', [{text: 'OK', style: 'cancel'}])
+        }
+        else{
+            if(gg === -1){
+                currentHigh.current = currentGuess
+            }
+            if(gg === 1){
+                currentLow.current = currentGuess
+            }
+           const next =  generateNum(currentLow.current, currentHigh.current, currentGuess)
+            setCurrentGuess(next);
+            
+        }
+    }
 
     return (
         <View style={styles.screen}>
@@ -24,19 +47,18 @@ export const GameScreen = props => {
     <Text style={styles.numberText}>{currentGuess}</Text>
             </View>
             <View style={styles.inputContainer}>
-        <Text>Select a Number</Text>
         
         <View style={styles.rcbuttons}>
           <View style={styles.btnObj}>
             <Button
-              onPress={() => }
+              onPress= {() => {nextGuessBtnsHandler(-1)}}
               color={colors.accent}
               title="LOWER"
             />
           </View>
           <View style={styles.btnObj}>
             <Button
-              onPress={() => }
+              onPress= {() => {nextGuessBtnsHandler(1)}}
               color={colors.primary}
               title="HIGHER"
             />

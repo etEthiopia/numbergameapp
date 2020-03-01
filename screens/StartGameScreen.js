@@ -30,7 +30,7 @@ export const StartGameScreen = props => {
 
   let confirmedOutput;
   if (confirmed) {
-    confirmedOutput = <Button title="Start Game" />;
+    confirmedOutput = <Button title="Start Game" onPress={()=> props.onStart(selectedNumber)} />;
   }
 
   return (
